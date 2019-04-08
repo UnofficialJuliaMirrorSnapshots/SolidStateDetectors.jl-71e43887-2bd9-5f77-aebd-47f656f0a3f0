@@ -1,0 +1,16 @@
+julia 1.0
+ArraysOfArrays
+Clustering
+CoordinateTransformations
+Distributions
+Interpolations
+IntervalSets
+JSON
+LaTeXStrings
+ParallelProcessingTools
+ProgressMeter
+RecipesBase
+StaticArrays
+Tables
+TypedTables
+Unitful

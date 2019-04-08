@@ -1,0 +1,274 @@
+{
+    "class": "CustomDetector",
+    "name": "Public Segmented BEGe",
+    "cyclic": 360.0,
+    "mirror_symmetry_phi": "false",
+    "bulk_type": "n",
+
+    "charge_carrier_density": {
+        "unit": "cm-3",
+        "top": 0.61,
+        "bot": 1.35
+    },
+
+    "geometry": {
+        "unit": "mm",
+        "world": {
+            "material": "Vacuum",
+            "geometry": [
+                {
+                    "type": "Tube",
+                    "pol": "positive",
+                    "rStart": 0.0,
+                    "rStop": 41.0,
+                    "phiStart": 0.0,
+                    "phiStop": 360.0,
+                    "zStart": -3.0,
+                    "zStop": 43.0
+                }]
+
+        },
+        "crystal": {
+            "material": "HPGe",
+            "geometry": {
+                "positive": [
+                    {
+                        "type": "Tube",
+                        "rStart": 0.0,
+                        "rStop": 39.5,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 0.0,
+                        "zStop": 40.0
+                    }
+                ]
+            }
+        }
+    },
+
+
+    "contacts": {
+        "n_channels": 5,
+        "unit": "mm",
+        "n": [
+          {
+            "name": "Core",
+            "potential": 4500.0,
+            "channel": 1,
+            "geometry": [
+                {
+                    "type": "Tube",
+                    "rStart": 0.0,
+                    "rStop": 7.5,
+                    "phiStart": 0.0,
+                    "phiStop": 360.0,
+                    "zStart": 39.7,
+                    "zStop": 40.0
+                }
+            ]
+          }
+        ],
+
+        "p": [
+            {
+                "name": "Segment 1",
+                "potential": 0.0,
+                "channel": 2,
+                "geometry": [
+                    {
+                        "type": "Tube",
+                        "rStart": 13.5,
+                        "rStop": 39.5,
+                        "phiStart": 0.3581,
+                        "phiStop": 59.6419,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 39.5,
+                        "rStop": 39.5,
+                        "phiStart": 0.3581,
+                        "phiStop": 59.6419,
+                        "zStart": 0.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 17.0,
+                        "rStop": 39.5,
+                        "phiStart": 0.3581,
+                        "phiStop": 59.6419,
+                        "zStart": 40.0,
+                        "zStop": 40.0
+                    }
+                ]
+            },
+            {
+                "name": "Segment 2",
+                "potential": 0.0,
+                "channel": 3,
+                "geometry": [
+                    {
+                        "type": "Tube",
+                        "rStart": 13.5,
+                        "rStop": 39.5,
+                        "phiStart": 120.3581,
+                        "phiStop": 179.6419,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 39.5,
+                        "rStop": 39.5,
+                        "phiStart": 120.3581,
+                        "phiStop": 179.6419,
+                        "zStart": 0.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 17.0,
+                        "rStop": 39.5,
+                        "phiStart": 120.3581,
+                        "phiStop": 179.6419,
+                        "zStart": 40.0,
+                        "zStop": 40.0
+                    }
+                ]
+            },
+            {
+                "name": "Segment 3",
+                "potential": 0.0,
+                "channel": 4,
+                "geometry": [
+                    {
+                        "type": "Tube",
+                        "rStart": 13.5,
+                        "rStop": 39.5,
+                        "phiStart": 240.3581,
+                        "phiStop": 299.6419,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 39.5,
+                        "rStop": 39.5,
+                        "phiStart": 240.3581,
+                        "phiStop": 299.6419,
+                        "zStart": 0.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 17.0,
+                        "rStop": 39.5,
+                        "phiStart": 240.3581,
+                        "phiStop": 299.6419,
+                        "zStart": 40.0,
+                        "zStop": 40.0
+                    }
+                ]
+            },
+            {
+                "name": "Segment 4",
+                "potential": 0.0,
+                "channel": 5,
+                "geometry": [
+                    {
+                        "type": "Tube",
+                        "rStart": 13.0,
+                        "rStop": 39.5,
+                        "phiStart": 60.3581,
+                        "phiStop": 119.6419,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 13.0,
+                        "rStop": 39.5,
+                        "phiStart": 180.3581,
+                        "phiStop": 239.6419,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 13.0,
+                        "rStop": 39.5,
+                        "phiStart": 300.3581,
+                        "phiStop": 359.6419,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 39.5,
+                        "rStop": 39.5,
+                        "phiStart": 60.3581,
+                        "phiStop": 119.6419,
+                        "zStart": 0.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 39.5,
+                        "rStop": 39.5,
+                        "phiStart": 180.3581,
+                        "phiStop": 239.6419,
+                        "zStart": 0.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 39.5,
+                        "rStop": 39.5,
+                        "phiStart": 300.3581,
+                        "phiStop": 359.6419,
+                        "zStart": 0.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 17.0,
+                        "rStop": 39.5,
+                        "phiStart": 60.3581,
+                        "phiStop": 119.6419,
+                        "zStart": 40.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 17.0,
+                        "rStop": 39.5,
+                        "phiStart": 180.3581,
+                        "phiStop": 239.6419,
+                        "zStart": 40.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 17.0,
+                        "rStop": 39.5,
+                        "phiStart": 300.3581,
+                        "phiStop": 359.6419,
+                        "zStart": 40.0,
+                        "zStop": 40.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 0.0,
+                        "rStop": 13.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    }
+                ]
+            }
+        ]
+    }
+}

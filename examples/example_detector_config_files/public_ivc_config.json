@@ -1,0 +1,160 @@
+{
+    "class": "CustomDetector",
+    "name": "Public Inverted Coax",
+    "cyclic": 0.0,
+    "mirror_symmetry_phi": "false",
+    "bulk_type": "p",
+
+    "charge_carrier_density": {
+      "unit": "cm-3",
+        "top": -0.94,
+        "bot": -1.10
+    },
+
+    "geometry": {
+        "unit": "mm",
+        "world": {
+          "material": "Vacuum",
+          "geometry": [
+              {
+                "type": "Tube",
+                "pol": "positive",
+                "rStart": 0.0,
+                "rStop": 38.0,
+                "phiStart": 0.0,
+                "phiStop": 360.0,
+                "zStart": -15.0,
+                "zStop": 85.0
+              }
+          ]
+
+        },
+
+        "crystal": {
+            "material": "HPGe",
+            "geometry": {
+                "positive": [
+                  {
+                      "type": "Tube",
+                      "rStart": 0.0,
+                      "rStop": 35.0,
+                      "phiStart": 0.0,
+                      "phiStop": 360.0,
+                      "zStart": 0.0,
+                      "zStop": 80.0
+                  }
+                ],
+                "negative": [
+                    {
+                        "type": "Cone",
+                        "pol": "positive",
+                        "orientation": "tr",
+                        "rStart": 24.420,
+                        "rStop": 35.000,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 20.0001,
+                        "zStop": 80.0001
+                    },
+                    {
+                        "type": "Tube",
+                        "pol": "positive",
+                        "rStart": -0.0001,
+                        "rStop": 5.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 25.0,
+                        "zStop": 80.0001
+                    }
+                ]
+            }
+        }
+    },
+    "contacts": {
+        "n_channels": 2,
+        "unit": "mm",
+        "p": [
+            {
+                "name": "Core",
+                "potential": 0.0,
+                "channel": 1,
+                "geometry": [
+                    {
+                        "type": "Tube",
+                        "rStart": 0.0,
+                        "rStop": 3.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 0.0,
+                        "zStop": 2.0
+                    }
+                ]
+            }
+        ],
+        "n": [
+            {
+                "name": "bottom plate",
+                "potential": 3500.0,
+                "channel": 2,
+                "geometry": [
+                    {
+                        "type": "Tube",
+                        "rStart": 15.0,
+                        "rStop": 35.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 0.0,
+                        "zStop": 0.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 35.0,
+                        "rStop": 35.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 0.0,
+                        "zStop": 20.0
+                    },
+                    {
+                        "type": "ConeMantle",
+                        "pol": "positive",
+                        "orientation": "bl",
+                        "rStart": 24.42,
+                        "rStop": 35.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 20.0,
+                        "zStop": 80.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 5.0,
+                        "rStop": 24.42,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 80.0,
+                        "zStop": 80.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 5.0,
+                        "rStop": 5.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 25.0,
+                        "zStop": 80.0
+                    },
+                    {
+                        "type": "Tube",
+                        "rStart": 0.0,
+                        "rStop": 5.0,
+                        "phiStart": 0.0,
+                        "phiStop": 360.0,
+                        "zStart": 25.0,
+                        "zStop": 25.0
+                    }
+                ]
+            }
+        ]
+    }
+}

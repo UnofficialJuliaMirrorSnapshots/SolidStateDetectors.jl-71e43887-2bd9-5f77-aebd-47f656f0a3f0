@@ -14,11 +14,30 @@ function DielectricDistribution(fss::PotentialSimulationSetup{T, N, S})::Dielect
     return DielectricDistribution{T, N, S}( fss.ϵ, fss.grid )
 end
 
-@recipe function f( ϵ::DielectricDistribution{T, 3, :Cylindrical};
+
+function NamedTuple(ϵ::DielectricDistribution{T}) where {T <: SSDFloat}
+    return (
+        grid = NamedTuple(ϵ.grid),
+        values = ϵ.data * internal_voltage_unit,
+    )
+end
+Base.convert(T::Type{NamedTuple}, x::DielectricDistribution) = T(x)
+    
+function DielectricDistribution(nt::NamedTuple)
+    grid = Grid(nt.grid)
+    T = typeof(ustrip(nt.values[1]))
+    S = get_coordinate_type(grid)
+    N = get_number_of_dimensions(grid)
+    DielectricDistribution{T, N, S}( ustrip.(uconvert.(internal_voltage_unit, nt.values)), grid)
+end
+Base.convert(T::Type{DielectricDistribution}, x::NamedTuple) = T(x)
+
+
+@recipe function f( ϵ::DielectricDistribution{T, 3, :cylindrical};
                     r = missing,
                     φ = missing,
                     z = missing ) where {T}
-    g::Grid{T, 3, :Cylindrical} = ϵ.grid
+    g::Grid{T, 3, :cylindrical} = ϵ.grid
    
     # seriescolor --> :viridis
     st --> :heatmap
@@ -72,11 +91,11 @@ end
 end
 
 
-@recipe function f( ϵ::DielectricDistribution{T, 3, :Cartesian};
+@recipe function f( ϵ::DielectricDistribution{T, 3, :cartesian};
                     x = missing,
                     y = missing,
                     z = missing ) where {T}
-    g::Grid{T, 3, :Cartesian} = ϵ.grid
+    g::Grid{T, 3, :cartesian} = ϵ.grid
    
     seriescolor --> :viridis
     st --> :heatmap

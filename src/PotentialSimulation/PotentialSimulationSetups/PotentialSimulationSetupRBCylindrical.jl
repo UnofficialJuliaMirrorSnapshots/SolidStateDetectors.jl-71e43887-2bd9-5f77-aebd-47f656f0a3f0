@@ -1,4 +1,4 @@
-function PotentialSimulationSetupRB(ssd::SolidStateDetector{T, :Cylindrical}, grid::Grid{T, 3, :Cylindrical} = Grid(ssd),
+function PotentialSimulationSetupRB(ssd::SolidStateDetector{T, :cylindrical}, grid::Grid{T, 3, :cylindrical} = Grid(ssd),
                 potential_array::Union{Missing, Array{T, 3}} = missing; sor_consts = [1.0, 1.0],
                 weighting_potential_contact_id::Union{Missing, Int} = missing
                 )::PotentialSimulationSetupRB{T} where {T}
@@ -104,10 +104,12 @@ function PotentialSimulationSetupRB(ssd::SolidStateDetector{T, :Cylindrical}, gr
             grid_boundary_factors::NTuple{3, NTuple{2, T}} = ((grid_boundary_factor_r_left, grid_boundary_factor_r_right), (grid_boundary_factor_φ_left, grid_boundary_factor_φ_right), (grid_boundary_factor_z_left, grid_boundary_factor_z_right))
         end
 
-        detector_material_ϵ_r::T = ssd.material_detector.ϵ_r
-        environment_material_ϵ_r::T = ssd.material_environment.ϵ_r
+        # detector_material_ϵ_r::T = ssd.material_detector.ϵ_r
+        # detector_material_ϵ_r::T = ssd.semiconductors[1].material.ϵ_r
+        # environment_material_ϵ_r::T = ssd.medium.ϵ_r
 
-        bulk_is_ptype::Bool = ssd.bulk_type == :ptype ? true : false
+        # bulk_is_ptype::Bool = ssd.bulk_type == :ptype ? true : false
+        bulk_is_ptype::Bool = ssd.semiconductors[1].bulk_type == :ptype ? true : false
         bias_voltages::Vector{T} = [i.potential for i in ssd.contacts]
         minimum_applied_potential::T = minimum(bias_voltages)
         maximum_applied_potential::T = maximum(bias_voltages)
@@ -274,7 +276,7 @@ function PotentialSimulationSetupRB(ssd::SolidStateDetector{T, :Cylindrical}, gr
         pointtypes = clear(pointtypes)
     end # @inbounds
 
-    fssrb::PotentialSimulationSetupRB{T, 3, 4, :Cylindrical} = PotentialSimulationSetupRB{T, 3, 4, :Cylindrical}(
+    fssrb::PotentialSimulationSetupRB{T, 3, 4, :cylindrical} = PotentialSimulationSetupRB{T, 3, 4, :cylindrical}(
         grid,
         rbpotential,
         rbpointtypes,
@@ -300,7 +302,7 @@ function Grid(fssrb::PotentialSimulationSetupRB{T, N1, N2, S})::Grid{T, N1, S} w
     return fssrb.grid
 end
 
-function ElectricPotentialArray(fssrb::PotentialSimulationSetupRB{T, 3, 4, :Cylindrical})::Array{T, 3} where {T}
+function ElectricPotentialArray(fssrb::PotentialSimulationSetupRB{T, 3, 4, :cylindrical})::Array{T, 3} where {T}
     pot::Array{T, 3} = Array{T, 3}(undef, size(fssrb.grid))
     for iz in axes(pot, 3)
         irbz::Int = rbidx(iz)
@@ -318,7 +320,7 @@ function ElectricPotentialArray(fssrb::PotentialSimulationSetupRB{T, 3, 4, :Cyli
 end
 
 
-function PointTypeArray(fssrb::PotentialSimulationSetupRB{T, 3, 4, :Cylindrical})::Array{PointType, 3} where {T}
+function PointTypeArray(fssrb::PotentialSimulationSetupRB{T, 3, 4, :cylindrical})::Array{PointType, 3} where {T}
     pointtypes::Array{PointType, 3} = zeros(PointType, size(fssrb.grid))
     for iz in axes(pointtypes, 3)
         irbz::Int = rbidx(iz)
@@ -341,7 +343,7 @@ function PointTypes(fss::PotentialSimulationSetup{T, N, S})::PointTypes{T, N, S}
 end
 
 
-function ChargeDensityArray(fssrb::PotentialSimulationSetupRB{T, 3, 4, :Cylindrical})::Array{T} where {T}
+function ChargeDensityArray(fssrb::PotentialSimulationSetupRB{T, 3, 4, :cylindrical})::Array{T} where {T}
     ρ::Array{T, 3} = zeros(T, size(fssrb.grid))
     for iz in axes(ρ, 3)
         irbz::Int = rbidx(iz)

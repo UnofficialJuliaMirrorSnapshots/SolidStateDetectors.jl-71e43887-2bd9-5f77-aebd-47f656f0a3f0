@@ -107,7 +107,7 @@ end
     linewidth:=2
     linecolor:=:black
     label-->""
-    aspect_ratio --> 1
+    # aspect_ratio := equal
     f=1/c.geometry_unit_factor
     @series begin
         partialcircle_3d(f*c.crystal_radius,0,2π,[0,0,0])
@@ -173,7 +173,7 @@ end
         coloring = [:blue, :orange, :orange, :orange, :orange, :orange, :orange, :orange]
         labeling = ["Core", "Mantle", "", "", "", "", "", ""]
     end
-    aspect_ratio --> 1
+    # aspect_ratio := equal
     f=1/b.geometry_unit_factor
     for i_part in 1:size(b.segmentation_r_ranges,1)
         rStart = f*b.segmentation_r_ranges[i_part][1]
@@ -247,7 +247,7 @@ end
         ylims --> (-45,45)
         zlims --> (-25,65)
     end
-    aspect_ratio --> 1
+    # aspect_ratio := equal
     f=1/b.geometry_unit_factor
     for i_part in 1:size(b.segmentation_r_ranges,1)
         rStart = f*b.segmentation_r_ranges[i_part][1]
@@ -307,7 +307,7 @@ end
 
 @recipe function f(contact::AbstractContact{T}) where T
     c-->:orange
-    for (i,g) in enumerate(sort!(vcat(contact.geometry_positive, contact.geometry_negative)))
+    for (i,g) in enumerate(vcat(contact.geometry_positive, contact.geometry_negative))
         @series begin
             i==1 ? label --> "$(contact.id)" : label := ""
             g
@@ -316,9 +316,8 @@ end
 end
 
 @recipe function f(c::SolidStateDetector{T}; coloring = [], labeling = []) where T
-    aspect_ratio --> 1
     legendfont --> 16
-    aspect_ratio -->1
+    # aspect_ratio := 1
     tickfontsize --> 9
     guidefontsize --> 13
     lw --> 2
@@ -331,7 +330,7 @@ end
         if c.name == "Public Segmented BEGe"
         @series begin
             # zlims --> (-0.023,0.063)
-            aspect_ratio --> 0.5
+            # aspect_ratio --> 0.5
             c, Val(:segBEGe)
         end
     elseif c.name == "Public Inverted Coax"
@@ -366,7 +365,7 @@ end
 end
 @recipe function f(c,a::Val{:coax})
     labeling = ["" for i in 1:19]
-    coloring = vcat([:orange for i in 1:18], [:blue])
+    coloring = vcat([:blue], [:orange for i in 1:18])
     for (ic, contact) in enumerate(c.contacts)
         @series begin
             color --> coloring[ic]
@@ -377,8 +376,8 @@ end
 end
 
 @recipe function f(c,a::Val{:segBEGe}, coloring = [])
-    isempty(coloring) ? coloring = [:red, :orange, :grey, :purple,:blue] : nothing
-    labeling = ["Seg. 1", "Seg. 2", "Seg. 3", "Seg. 4","Core"]
+    isempty(coloring) ? coloring = [:blue, :red, :orange, :grey, :purple] : nothing
+    labeling = [ "Core", "Seg. 1", "Seg. 2", "Seg. 3", "Seg. 4"]
     for (ic, contact) in enumerate(c.contacts)
         @series begin
             color --> coloring[ic]
@@ -388,6 +387,19 @@ end
     end
 end
 
+@recipe function f(geometry::AbstractGeometry)
+    pos, neg = get_decomposed_volumes(geometry)
+    for g in pos
+        @series begin
+            g
+        end
+    end
+end
+@recipe function f(object::AbstractObject)
+    @series begin
+        object.geometry
+    end
+end
 
 ## 2D from Felix
 

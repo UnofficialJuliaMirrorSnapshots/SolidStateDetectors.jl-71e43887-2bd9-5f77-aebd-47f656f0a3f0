@@ -2,13 +2,13 @@
 
 abstract type AbstractCoordinatePoint{T, N, S} <: StaticArrays.FieldVector{N, T} end
 
-struct CartesianPoint{ T <: RealQuantity } <: AbstractCoordinatePoint{T, 3, :Cartesian}
+struct CartesianPoint{ T <: RealQuantity } <: AbstractCoordinatePoint{T, 3, :cartesian}
     x::T
     y::T
     z::T
 end
 
-struct CylindricalPoint{ T <: RealQuantity } <: AbstractCoordinatePoint{T, 3, :Cylindrical}
+struct CylindricalPoint{ T <: RealQuantity } <: AbstractCoordinatePoint{T, 3, :cylindrical}
     r::T
     φ::T # in radian
     z::T
@@ -48,6 +48,12 @@ end
     st -> :scatter
     @series begin
         [v[i].x for i in eachindex(v) ], [v[i].y for i in eachindex(v) ], [v[i].z for i in eachindex(v) ]
+    end
+end
+@recipe function f(v::AbstractVector{<:CylindricalPoint})
+    st -> :scatter
+    @series begin
+        map(x->CartesianPoint(x),v)
     end
 end
  ##aliases for ease of use

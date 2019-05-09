@@ -5,16 +5,17 @@
 """
 function drift_charge!(
                             drift_path::Vector{CartesianPoint{T}},
-                            det::SolidStateDetector{T, :Cartesian},
-                            grid::Grid{T, 3, :Cartesian},
+                            det::SolidStateDetector{T, :cartesian},
+                            grid::Grid{T, 3, :cartesian},
                             startpos::CartesianPoint{T},
                             Δt::T,
-                            velocity_field::Interpolations.Extrapolation{<:StaticVector{3}, 3}
+                            velocity_field::Interpolations.Extrapolation{<:StaticVector{3}, 3};
+                            verbose::Bool = true
                         )::Nothing where {T <: SSDFloat}
     done::Bool = false
     drift_path[1] = startpos
     null_step::CartesianVector{T} = CartesianVector{T}(0, 0, 0)
-    for istep in eachindex(drift_path)[2:end] #end] 
+    @inbounds for istep in eachindex(drift_path)[2:end] #end] 
         if done == false
             current_pos::CartesianPoint{T} = drift_path[istep - 1]
             stepvector::CartesianVector{T} = get_velocity_vector(velocity_field, current_pos) * Δt
@@ -37,10 +38,15 @@ function drift_charge!(
                         next_pos -= small_projected_vector
                         i += 1
                     end
-                    if i == 1000 @warn("Handling of charge at floating boundary did not work as intended. Start Position (Cart): $startpos") end
+                    if i == 1000 && verbose @warn("Handling of charge at floating boundary did not work as intended. Start Position (Cart): $startpos") end
                     drift_path[istep] = next_pos
-                else 
-                    @warn ("Internal error for charge stating at $startpos")
+                elseif cd_point_type == CD_BULK
+                    if verbose @warn ("Internal error for charge stating at $startpos") end
+                    drift_path[istep] = current_pos
+                    done = true
+                else # elseif cd_point_type == CD_OUTSIDE      
+                    if verbose @warn ("Internal error for charge stating at $startpos") end
+                    drift_path[istep] = current_pos
                     done = true
                 end
             end
@@ -57,7 +63,7 @@ end
 # const CD_BULK = 0x02
 # const CD_FLOATING_BOUNDARY = 0x04 # not 0x03, so that one could use bit operations here...
 
-function get_crossing_pos(  detector::SolidStateDetector{T, :Cartesian}, grid::Grid{T, 3}, point_in::CartesianPoint{T}, point_out::CartesianPoint{T}; 
+function get_crossing_pos(  detector::SolidStateDetector{T, :cartesian}, grid::Grid{T, 3}, point_in::CartesianPoint{T}, point_out::CartesianPoint{T}; 
                             max_n_iter::Int = 2000)::Tuple{CartesianPoint{T}, UInt8, Int, CartesianVector{T}} where {T <: SSDFloat}
     point_mid::CartesianPoint{T} = T(0.5) * (point_in + point_out)
     cd_point_type::UInt8, contact_idx::Int, surface_normal::CartesianVector{T} = point_type(detector, grid, point_mid)

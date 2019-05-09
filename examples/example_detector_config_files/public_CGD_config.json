@@ -1,89 +1,113 @@
 {
 	"name":"ExampleCuboid",
-	"class":"CGD",
-	"bulk_type": "n",
-	
-	"geometry": {
-		"unit": "mm",
-		"world": {
-			"material": "Vacuum",
-			"geometry": [
-				{
-					"type": "CartesianBox3D",
-					"xStart": -15.0,
-					"xStop":   15.0,
-					"yStart": -15.0,
-					"yStop":   15.0,
-					"zStart": -15.0,
-					"zStop":   15.0
+	"setup": {
+        "units": {
+            "length": "mm",
+            "angle": "deg",
+            "potential": "V",
+            "temperature": "K"
+        },
+        "grid": {
+			"coordinates": "cartesian",
+			"axes": {
+				"x": {
+					"from": -5,
+					"to": 15,
+					"boundaries": "inf"
+				},
+				"y": {
+					"from": -5,
+					"to": 15,
+					"boundaries": "inf"
+				},
+				"z": {
+					"from": -5,
+					"to": 15,
+					"boundaries": "inf"
 				}
-			]
-		},
-		"crystal": {
-			"material": "HPGe",
-			"geometry": {
-				"positive": [
-					{
-						"type": "CartesianBox3D",
-						"xStart": -10.0,
-						"xStop":   10.0,
-						"yStart": -10.0,
-						"yStop":   10.0,
-						"zStart": -10.0,
-						"zStop":   10.0
-					}
-				]
 			}
-		}
-	},
-
-	"charge_density_model": {
-		"name": "Linear",
-		"x_0": 0.2,
-		"x_gradient": 0.00071,
-		"y_0": 0.2,
-		"y_gradient": 0.00071,
-		"z_0": 0.2,
-		"z_gradient": 0.00071
-	},
-
-	"contacts": {
-		"n_channels": 3,
-		"unit": "mm",
-		"p": [
+		},
+        "medium": "vacuum",
+        "objects": [
 			{
-				"name": "N+ Contact",
+				"type": "semiconductor",
+				"material": "HPGe",
+				"bulk_type": "n",
+				"temperature": 77,
+				"charge_density_model": {
+                    "name": "linear",
+                    "x": {
+                        "init": 0.0,
+                        "gradient": 0.000
+                    },
+                    "y": {
+                        "init": 0.0,
+                        "gradient": 0.0
+                    },
+                    "z": {
+                        "init": 0.0,
+                        "gradient": 0.000
+                    }
+                },
+				"geometry": {
+					"type": "box",
+					"x": {
+						"from": 0.0,
+						"to": 10.0
+					},
+					"y":{
+						"from": 0.0,
+						"to": 10.0
+					},
+					"z": {
+						"from": 0.0,
+						"to": 10.0
+					}
+				}
+			},
+			{
+				"type": "contact",
+				"material": "HPGe",
+				"name": "n+ contact",
 				"potential": 2000.0,
 				"channel": 1,
-				"geometry": [
-					{
-						"type": "CartesianBox3D",
-						"xStart": -10.0,
-						"xStop":  -9.9,
-						"yStart": -10.0,
-						"yStop":   10.0,
-						"zStart": -10.0,
-						"zStop":   10.0
+				"geometry": {
+					"type": "box",
+					"x": {
+						"from": 0,
+						"to": 0.1
+					},
+					"y":{
+						"from": 0.0,
+						"to": 10.0
+					},
+					"z": {
+						"from": 0.0,
+						"to": 10.0
 					}
-				]
-			}
-		],
-		"n": [
+				}
+			},
 			{
-				"name": "P+ Contact",
+				"type": "contact",
+				"material": "HPGe",
+				"name": "p+ contact",
 				"potential": 0.0,
 				"channel": 2,
-				"geometry": [
-					{
-						"type": "CartesianBox3D",
-						"xStart":  9.9,
-						"xStop":   10.0,
-						"yStart": -10.0,
-						"yStop":   10.0,
-						"zStart": -10.0,
-						"zStop":   10.0
+				"geometry": {
+					"type": "box",
+					"x": {
+						"from": 9.9,
+						"to": 10.0
+					},
+					"y":{
+						"from": 0.0,
+						"to": 10.0
+					},
+					"z": {
+						"from": 0.0,
+						"to": 10.0
 					}
-				]
+				}
 			}
 		]
 	}

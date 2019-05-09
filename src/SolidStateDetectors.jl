@@ -30,35 +30,39 @@ import Base: size, sizeof, length, getindex, setindex!, axes, range, ndims, each
 import Base: show, print, println, display, +, -, &
 import Base.convert
 
-
 const SSD = SolidStateDetectors; export SSD
 export SolidStateDetector
 export SSD_examples
 
-export SSDSetup
+export Grid, CylindricalPoint, CartesianPoint
 
-export AbstractChargeDriftModel, get_electron_drift_field, get_hole_drift_field
+export ElectricPotential, PointTypes, ChargeDensity, DielectricDistribution, WeightingPotential, ElectricField
+export calculate_electric_potential!, calculate_weighting_potential!, get_active_volume
+export generate_charge_signals, generate_charge_signals!
+export AbstractChargeDriftModel
 export VacuumChargeDriftModel, ADLChargeDriftModel
-export Grid
-export ElectricPotential, PointTypes, ChargeDensity, DielectricDistribution, WeightingPotential
-export calculate_electric_potential, calculate_weighting_potential, get_active_volume
-export generate_charge_signals!, generate_charge_signals
+export Simulation, simulate!
 
 ## temporary exports for easier debugging
-export cyp,cap # CylindricalPoint, CartesianPoint
+export cyp, cap # CylindricalPoint, CartesianPoint
 export is_surface_point
 export point_type
 export geom_round
-export CylindricalPoint
-export CartesianPoint
 export get_velocity_vector
 export get_crossing_pos
 
+
 const SSDFloat = Union{Float16, Float32, Float64}
+
+struct ConfigFileError <: Exception 
+    msg::AbstractString
+end
+Base.showerror(io::IO, e::ConfigFileError) = print(io, "ConfigFileError: ", e.msg)
 
 include("Geometries/Geometries.jl")
 
 include("Axes/DiscreteAxis.jl")
+include("World/World.jl")
 include("Grids/Grids.jl")
 
 include("Types/Types.jl")
@@ -80,7 +84,8 @@ include("SignalGeneration/SignalGeneration.jl")
 include("ChargeStatistics/ChargeStatistics.jl")
 include("ChargeClustering/ChargeClustering.jl")
 
-include("SSDSetup/SSDSetup.jl")
+include("Simulation/Simulation.jl")
+include("Event/Event.jl")
 
 include("IO/IO.jl")
 
